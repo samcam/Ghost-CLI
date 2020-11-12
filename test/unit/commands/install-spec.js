@@ -196,7 +196,11 @@ describe('Unit: Commands > Install', function () {
             const InstallCommand = proxyquire(modulePath, {
                 '../tasks/yarn-install': yarnInstallStub,
                 '../tasks/ensure-structure': ensureStructureStub,
-                '../utils/dir-is-empty': dirEmptyStub
+                '../utils/dir-is-empty': dirEmptyStub,
+                '../tasks/release-notes': {
+                    displayReleaseNotes: sinon.stub().resolves(),
+                    checkForConfirmation: sinon.stub().resolves()
+                }
             });
             const testInstance = new InstallCommand({listr: listrStub}, {cliVersion: '1.0.0'});
             const runCommandStub = sinon.stub(testInstance, 'runCommand').resolves();
